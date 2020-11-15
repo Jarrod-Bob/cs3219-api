@@ -152,52 +152,6 @@
               }
             }
           },
-          "EnterpriseLogAccessIamRole": {
-            "Type": "AWS::IAM::Role",
-            "Properties": {
-              "AssumeRolePolicyDocument": {
-                "Version": "2012-10-17",
-                "Statement": [
-                  {
-                    "Effect": "Allow",
-                    "Principal": {
-                      "AWS": "arn:aws:iam::802587217904:root"
-                    },
-                    "Action": "sts:AssumeRole",
-                    "Condition": {
-                      "StringEquals": {
-                        "sts:ExternalId": "ServerlessEnterprise-YBvtjnnKxf9W0k1Cll"
-                      }
-                    }
-                  }
-                ]
-              },
-              "Policies": [
-                {
-                  "PolicyName": "LogFilterAccess",
-                  "PolicyDocument": {
-                    "Version": "2012-10-17",
-                    "Statement": [
-                      {
-                        "Effect": "Allow",
-                        "Action": [
-                          "logs:FilterLogEvents"
-                        ],
-                        "Resource": [
-                          {
-                            "Fn::GetAtt": [
-                              "AppLogGroup",
-                              "Arn"
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                }
-              ]
-            }
-          },
           "AppLambdaFunction": {
             "Type": "AWS::Lambda::Function",
             "Properties": {
@@ -205,10 +159,10 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/cs3219-api/dev/1605438461704-2020-11-15T11:07:41.704Z/cs3219-api.zip"
+                "S3Key": "serverless/cs3219-api/dev/1605444401829-2020-11-15T12:46:41.829Z/cs3219-api.zip"
               },
               "FunctionName": "cs3219-api-dev-app",
-              "Handler": "s_app.handler",
+              "Handler": "index.handler",
               "MemorySize": 1024,
               "Role": {
                 "Fn::GetAtt": [
@@ -223,14 +177,14 @@
               "AppLogGroup"
             ]
           },
-          "AppLambdaVersionEZqc1Bjqt1oEsMqX6vYlrzv872xaaiHtWoAeEIJyME": {
+          "AppLambdaVersionbSIcxds1OBw2y6zAPvdkxnzmQ0U5ohPkRJHgjlfjV0": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "AppLambdaFunction"
               },
-              "CodeSha256": "7t1VKk3NSTCB1v3r/nFsjPUEBXekQtjDCr0+wbHp2CE="
+              "CodeSha256": "U1YJu8seGSHoO57TxrdVa72Jc+rSiRDadCj4a9DsCJk="
             }
           },
           "ApiGatewayRestApi": {
@@ -349,7 +303,7 @@
               "MethodResponses": []
             }
           },
-          "ApiGatewayDeployment1605438441622": {
+          "ApiGatewayDeployment1605444387030": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -398,153 +352,6 @@
                 ]
               }
             }
-          },
-          "ApiGatewayLogGroup": {
-            "Type": "AWS::Logs::LogGroup",
-            "Properties": {
-              "LogGroupName": "/aws/api-gateway/cs3219-api-dev"
-            }
-          },
-          "CustomApiGatewayAccountCloudWatchRole": {
-            "Type": "Custom::ApiGatewayAccountRole",
-            "Version": 1,
-            "Properties": {
-              "ServiceToken": {
-                "Fn::GetAtt": [
-                  "CustomDashresourceDashapigwDashcwDashroleLambdaFunction",
-                  "Arn"
-                ]
-              }
-            }
-          },
-          "IamRoleCustomResourcesLambdaExecution": {
-            "Type": "AWS::IAM::Role",
-            "Properties": {
-              "AssumeRolePolicyDocument": {
-                "Version": "2012-10-17",
-                "Statement": [
-                  {
-                    "Effect": "Allow",
-                    "Principal": {
-                      "Service": [
-                        "lambda.amazonaws.com"
-                      ]
-                    },
-                    "Action": [
-                      "sts:AssumeRole"
-                    ]
-                  }
-                ]
-              },
-              "Policies": [
-                {
-                  "PolicyName": {
-                    "Fn::Join": [
-                      "-",
-                      [
-                        "dev",
-                        "cs3219-api",
-                        "custom-resources-lambda"
-                      ]
-                    ]
-                  },
-                  "PolicyDocument": {
-                    "Version": "2012-10-17",
-                    "Statement": [
-                      {
-                        "Effect": "Allow",
-                        "Resource": {
-                          "Fn::Join": [
-                            ":",
-                            [
-                              "arn",
-                              {
-                                "Ref": "AWS::Partition"
-                              },
-                              "iam:",
-                              {
-                                "Ref": "AWS::AccountId"
-                              },
-                              "role/*"
-                            ]
-                          ]
-                        },
-                        "Action": [
-                          "iam:AttachRolePolicy",
-                          "iam:CreateRole",
-                          "iam:ListAttachedRolePolicies",
-                          "iam:PassRole"
-                        ]
-                      },
-                      {
-                        "Effect": "Allow",
-                        "Resource": {
-                          "Fn::Join": [
-                            ":",
-                            [
-                              "arn",
-                              {
-                                "Ref": "AWS::Partition"
-                              },
-                              "apigateway:*::/account"
-                            ]
-                          ]
-                        },
-                        "Action": [
-                          "apigateway:GET",
-                          "apigateway:PATCH"
-                        ]
-                      }
-                    ]
-                  }
-                }
-              ]
-            }
-          },
-          "CustomDashresourceDashapigwDashcwDashroleLambdaFunction": {
-            "Type": "AWS::Lambda::Function",
-            "Properties": {
-              "Code": {
-                "S3Bucket": {
-                  "Ref": "ServerlessDeploymentBucket"
-                },
-                "S3Key": "serverless/cs3219-api/dev/1605438461704-2020-11-15T11:07:41.704Z/custom-resources.zip"
-              },
-              "FunctionName": "cs3219-api-dev-custom-resource-apigw-cw-role",
-              "Handler": "apiGatewayCloudWatchRole/handler.handler",
-              "MemorySize": 1024,
-              "Runtime": "nodejs12.x",
-              "Timeout": 180,
-              "Role": {
-                "Fn::GetAtt": [
-                  "IamRoleCustomResourcesLambdaExecution",
-                  "Arn"
-                ]
-              }
-            },
-            "DependsOn": [
-              "IamRoleCustomResourcesLambdaExecution"
-            ]
-          },
-          "CloudWatchLogsSubscriptionFilterAppLogGroup": {
-            "Type": "AWS::Logs::SubscriptionFilter",
-            "Properties": {
-              "DestinationArn": "arn:aws:logs:ap-southeast-1:802587217904:destination:YBvtjnnKxf9W0k1Cll#rVz8fr9td0blLPb63V#cs3219-api#dev",
-              "FilterPattern": "?\"REPORT RequestId: \" ?\"SERVERLESS_ENTERPRISE\"",
-              "LogGroupName": {
-                "Ref": "AppLogGroup"
-              }
-            }
-          },
-          "CloudWatchLogsSubscriptionFilterApiGatewayLogGroup": {
-            "Type": "AWS::Logs::SubscriptionFilter",
-            "Properties": {
-              "DestinationArn": "arn:aws:logs:ap-southeast-1:802587217904:destination:YBvtjnnKxf9W0k1Cll#rVz8fr9td0blLPb63V#cs3219-api#dev",
-              "FilterPattern": "\"SLS_ACCESS_LOG\"",
-              "LogGroupName": {
-                "Ref": "ApiGatewayLogGroup"
-              }
-            }
           }
         },
         "Outputs": {
@@ -553,18 +360,10 @@
               "Ref": "ServerlessDeploymentBucket"
             }
           },
-          "EnterpriseLogAccessIamRole": {
-            "Value": {
-              "Fn::GetAtt": [
-                "EnterpriseLogAccessIamRole",
-                "Arn"
-              ]
-            }
-          },
           "AppLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "AppLambdaVersionEZqc1Bjqt1oEsMqX6vYlrzv872xaaiHtWoAeEIJyME"
+              "Ref": "AppLambdaVersionbSIcxds1OBw2y6zAPvdkxnzmQ0U5ohPkRJHgjlfjV0"
             }
           },
           "ServiceEndpoint": {
@@ -659,17 +458,12 @@
           }
         }
       },
-      "logs": {
-        "restApi": {
-          "format": "{\"requestTime\":\"$context.requestTime\",\"requestId\":\"$context.requestId\",\"apiId\":\"$context.apiId\",\"resourceId\":\"$context.resourceId\",\"resourcePath\":\"$context.resourcePath\",\"path\":\"$context.path\",\"httpMethod\":\"$context.httpMethod\",\"status\":\"$context.status\",\"authLatency\":\"$context.authorizer.integrationLatency\",\"integrationLatency\":\"$context.integrationLatency\",\"integrationStatus\":\"$context.integrationStatus\",\"responseLatency\":\"$context.responseLatency\",\"responseLength\":\"$context.responseLength\",\"errorMessage\":\"$context.error.message\",\"format\":\"SLS_ACCESS_LOG\",\"version\":\"1.0.0\"}"
-        }
-      },
       "vpc": {}
     },
     "pluginsData": {},
     "functions": {
       "app": {
-        "handler": "s_app.handler",
+        "handler": "index.handler",
         "events": [
           {
             "http": "ANY /"
@@ -684,16 +478,14 @@
         "timeout": 6,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "AppLambdaVersionEZqc1Bjqt1oEsMqX6vYlrzv872xaaiHtWoAeEIJyME"
+        "versionLogicalId": "AppLambdaVersionbSIcxds1OBw2y6zAPvdkxnzmQ0U5ohPkRJHgjlfjV0"
       }
     },
     "configValidationMode": "warn",
     "serviceFilename": "serverless.yml",
     "app": "cs3219-api-app",
-    "org": "ngjunguangjarrod",
     "layers": {},
     "initialServerlessConfig": {
-      "org": "ngjunguangjarrod",
       "app": "cs3219-api-app",
       "service": {
         "$ref": "$[\"service\"][\"serviceObject\"]"
@@ -705,14 +497,11 @@
         "$ref": "$[\"service\"][\"functions\"]"
       }
     },
-    "isDashboardMonitoringPreconfigured": true,
-    "isDashboardAppPreconfigured": true,
-    "orgUid": "YBvtjnnKxf9W0k1Cll",
-    "appUid": "rVz8fr9td0blLPb63V",
+    "isDashboardMonitoringPreconfigured": false,
     "artifact": "C:\\resthub\\.serverless\\cs3219-api.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/cs3219-api/dev/1605438461704-2020-11-15T11:07:41.704Z",
+    "artifactDirectoryName": "serverless/cs3219-api/dev/1605444401829-2020-11-15T12:46:41.829Z",
     "artifact": "cs3219-api.zip"
   }
 }
