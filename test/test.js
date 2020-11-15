@@ -8,11 +8,11 @@ chai.should();
 var students = [];
 
 describe("Students", () => {
-  describe("POST /students", () => {
+  describe("POST /api/students", () => {
     it("should add a new student", (done) => {
       chai
         .request(app)
-        .post(`/students`)
+        .post(`/api/students`)
         .send({
           name: "jonnycash",
           email: "jc@jc.com",
@@ -20,7 +20,6 @@ describe("Students", () => {
           matric: "A111111B",
         })
         .end((err, res) => {
-          print(res);
           res.should.have.status(200);
           res.body.should.be.a("object");
           res.body.message.should.be.string("New student created!");
@@ -30,7 +29,7 @@ describe("Students", () => {
     it("should add a new student", (done) => {
       chai
         .request(app)
-        .post(`/students`)
+        .post(`/api/students`)
         .send({
           name: "jonny",
           email: "j@j.com",
@@ -49,7 +48,7 @@ describe("Students", () => {
     it("should get all students record", (done) => {
       chai
         .request(app)
-        .get("/students")
+        .get("/api/students")
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a("object");
@@ -62,7 +61,7 @@ describe("Students", () => {
       const id = students[0]._id;
       chai
         .request(app)
-        .get(`/students/${id}`)
+        .get(`/api/students/${id}`)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a("object");
@@ -72,12 +71,12 @@ describe("Students", () => {
     });
   });
 
-  describe("PUT /students/:id", () => {
+  describe("PUT /api/students/:id", () => {
     it("should update a single student at specified id", (done) => {
       const id = students[0]._id;
       chai
         .request(app)
-        .put(`/students/${id}`)
+        .put(`/api/students/${id}`)
         .send({
           name: "jonnybravo",
           email: "jb@jb.com",
@@ -91,12 +90,12 @@ describe("Students", () => {
         });
     });
   });
-  describe("DELETE /students", () => {
+  describe("DELETE /api/students", () => {
     it("should delete a single student at specified id", (done) => {
       const id = students[0]._id;
       chai
         .request(app)
-        .del(`/students/${id}`)
+        .del(`/api/students/${id}`)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a("object");
