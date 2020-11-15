@@ -23,6 +23,7 @@
     "express": "^4.17.1",
     "mocha": "^8.2.1",
     "mongoose": "^5.10.13",
-    "serverless": "^2.11.1"
+    "serverless": "^2.11.1",
+    "serverless-http": "^2.6.0"
   }
 }
