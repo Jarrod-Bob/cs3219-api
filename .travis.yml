@@ -5,6 +5,7 @@ node_js:
 services: mongodb
 
 scripts:
+  - npm install
   - mocha --timeout 15000
   - npm run test
   - npm run deploy
