@@ -22,7 +22,7 @@ app.use(
 );
 app.use(bodyParser.json());
 // Connect to Mongoose and set connection variable
-mongoose.connect("mongodb://localhost/resthub", {
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/resthub", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
