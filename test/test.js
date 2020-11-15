@@ -17,8 +17,10 @@ describe("Students", () => {
           name: "jonnycash",
           email: "jc@jc.com",
           faculty: "Science",
+          matric: "A111111B",
         })
         .end((err, res) => {
+          print(res);
           res.should.have.status(200);
           res.body.should.be.a("object");
           res.body.message.should.be.string("New student created!");
@@ -33,6 +35,7 @@ describe("Students", () => {
           name: "jonny",
           email: "j@j.com",
           faculty: "Science",
+          matric: "A1111112A",
         })
         .end((err, res) => {
           res.should.have.status(200);
