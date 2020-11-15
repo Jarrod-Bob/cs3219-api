@@ -6,6 +6,9 @@ let bodyParser = require("body-parser");
 let mongoose = require("mongoose");
 // Import cors
 let cors = require("cors");
+//Import serverless
+const serverless = require("serverless-http");
+
 // Initialise the app
 let app = express();
 
