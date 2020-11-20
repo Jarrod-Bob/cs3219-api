@@ -24,6 +24,7 @@ app.use(
   })
 );
 app.use(bodyParser.json());
+
 // Connect to Mongoose and set connection variable
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/resthub", {
   useNewUrlParser: true,
